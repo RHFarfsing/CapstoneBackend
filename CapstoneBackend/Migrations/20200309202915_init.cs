@@ -2,27 +2,49 @@
 
 namespace CapstoneBackend.Migrations
 {
-    public partial class addedAllClassesAndControllers : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_User",
-                table: "User");
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Username = table.Column<string>(maxLength: 30, nullable: false),
+                    Password = table.Column<string>(maxLength: 30, nullable: false),
+                    Firstname = table.Column<string>(maxLength: 30, nullable: false),
+                    Lastname = table.Column<string>(maxLength: 30, nullable: false),
+                    Phone = table.Column<string>(maxLength: 12, nullable: true),
+                    Email = table.Column<string>(maxLength: 255, nullable: true),
+                    IsReviewer = table.Column<bool>(nullable: false, defaultValue: false),
+                    IsAdmin = table.Column<bool>(nullable: false, defaultValue: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                });
 
-            migrationBuilder.RenameTable(
-                name: "User",
-                newName: "Users");
-
-            migrationBuilder.RenameIndex(
-                name: "IX_User_Username",
-                table: "Users",
-                newName: "IX_Users_Username");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_Users",
-                table: "Users",
-                column: "Id");
+            migrationBuilder.CreateTable(
+                name: "Vendors",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Code = table.Column<string>(maxLength: 30, nullable: false),
+                    Name = table.Column<string>(maxLength: 30, nullable: false),
+                    Address = table.Column<string>(maxLength: 30, nullable: false),
+                    City = table.Column<string>(maxLength: 30, nullable: false),
+                    State = table.Column<string>(maxLength: 2, nullable: false),
+                    Zip = table.Column<string>(maxLength: 5, nullable: false),
+                    Phone = table.Column<string>(maxLength: 12, nullable: true),
+                    Email = table.Column<string>(maxLength: 225, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Vendors", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "Requests",
@@ -50,26 +72,6 @@ namespace CapstoneBackend.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Vendors",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Code = table.Column<string>(maxLength: 30, nullable: false),
-                    Name = table.Column<string>(maxLength: 30, nullable: false),
-                    Address = table.Column<string>(maxLength: 30, nullable: false),
-                    City = table.Column<string>(maxLength: 30, nullable: false),
-                    State = table.Column<string>(maxLength: 2, nullable: false),
-                    Zip = table.Column<string>(maxLength: 5, nullable: false),
-                    Phone = table.Column<string>(maxLength: 12, nullable: true),
-                    Email = table.Column<string>(maxLength: 225, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Vendors", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Products",
                 columns: table => new
                 {
@@ -79,6 +81,7 @@ namespace CapstoneBackend.Migrations
                     Name = table.Column<string>(maxLength: 30, nullable: false),
                     Price = table.Column<decimal>(type: "decimal(11,2)", nullable: false),
                     Unit = table.Column<string>(maxLength: 30, nullable: false),
+                    PhotoPath = table.Column<string>(maxLength: 225, nullable: true),
                     VendorId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -100,7 +103,7 @@ namespace CapstoneBackend.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RequestId = table.Column<int>(nullable: false),
                     ProductId = table.Column<int>(nullable: false),
-                    Quantity = table.Column<int>(type: "decimal(11,2)", nullable: false, defaultValue: 1)
+                    Quantity = table.Column<int>(nullable: false, defaultValue: 1)
                 },
                 constraints: table =>
                 {
@@ -140,6 +143,12 @@ namespace CapstoneBackend.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Users_Username",
+                table: "Users",
+                column: "Username",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Vendors_Code",
                 table: "Vendors",
                 column: "Code",
@@ -160,23 +169,8 @@ namespace CapstoneBackend.Migrations
             migrationBuilder.DropTable(
                 name: "Vendors");
 
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_Users",
-                table: "Users");
-
-            migrationBuilder.RenameTable(
-                name: "Users",
-                newName: "User");
-
-            migrationBuilder.RenameIndex(
-                name: "IX_Users_Username",
-                table: "User",
-                newName: "IX_User_Username");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_User",
-                table: "User",
-                column: "Id");
+            migrationBuilder.DropTable(
+                name: "Users");
         }
     }
 }

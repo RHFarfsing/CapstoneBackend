@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CapstoneBackend.Migrations
 {
     [DbContext(typeof(CapstoneDbContext))]
-    [Migration("20200309145700_addedAllClassesAndControllers")]
-    partial class addedAllClassesAndControllers
+    [Migration("20200309202915_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -36,6 +36,10 @@ namespace CapstoneBackend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(30)")
                         .HasMaxLength(30);
+
+                    b.Property<string>("PhotoPath")
+                        .HasColumnType("nvarchar(225)")
+                        .HasMaxLength(225);
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(11,2)");
@@ -117,7 +121,7 @@ namespace CapstoneBackend.Migrations
 
                     b.Property<int>("Quantity")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("decimal(11,2")
+                        .HasColumnType("int")
                         .HasDefaultValue(1);
 
                     b.Property<int>("RequestId")
