@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace CapstoneBackend.Models {
@@ -14,6 +15,8 @@ namespace CapstoneBackend.Models {
         public string Email { get; set; }
         public bool IsReviewer { get; set; }
         public bool IsAdmin { get; set; }
+        [JsonIgnore]
+        public virtual List<Request> Requests { get; set; }
         public User() {
 
         }

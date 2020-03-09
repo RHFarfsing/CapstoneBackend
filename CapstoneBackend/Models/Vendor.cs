@@ -1,6 +1,8 @@
-﻿using System;
+﻿using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace CapstoneBackend.Models {
@@ -14,6 +16,8 @@ namespace CapstoneBackend.Models {
         public string Zip { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
+        [JsonIgnore]
+        public virtual List<Product> Products { get; set; }
         public Vendor() {
 
         }
