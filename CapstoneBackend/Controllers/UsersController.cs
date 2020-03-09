@@ -15,6 +15,11 @@ namespace CapstoneBackend.Controllers
     public class UsersController : ControllerBase
     {
         private readonly CapstoneDbContext _context;
+        private readonly CapstoneDbContext context = new CapstoneDbContext();
+
+        public User Login(string username, string password) {
+            return context.User.SingleOrDefault(u => u.Username == username && u.Password == password);
+        }
 
         public UsersController(CapstoneDbContext context)
         {

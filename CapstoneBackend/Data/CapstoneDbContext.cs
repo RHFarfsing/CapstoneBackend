@@ -70,7 +70,7 @@ namespace CapstoneBackend.Data {
             model.Entity<RequestLine>(e => {
                 e.ToTable("Requestlines");
                 e.HasKey(x => x.Id);
-                e.Property(x => x.Quantity).HasColumnType("decimal(11,2)").HasDefaultValue(1);
+                e.Property(x => x.Quantity).HasDefaultValue(1);
                 e.HasOne(x => x.Product).WithMany(x => x.RequestLines).HasForeignKey(x => x.ProductId);
                 e.HasOne(x => x.Request).WithMany(x => x.RequestLines).HasForeignKey(x => x.RequestId).OnDelete(DeleteBehavior.Restrict);
             });
