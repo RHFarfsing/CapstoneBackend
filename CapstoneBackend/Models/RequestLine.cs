@@ -10,7 +10,6 @@ namespace CapstoneBackend.Models {
         public int RequestId { get; set; }
         public int ProductId { get; set; }
         public int Quantity { get; set; }
-        [JsonIgnore]
         public virtual Request Request { get; set; }
         public virtual Product Product { get; set; }
         public RequestLine() {

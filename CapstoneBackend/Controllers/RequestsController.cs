@@ -1,15 +1,13 @@
-﻿using System;
+﻿using CapstoneBackend.Data;
+using CapstoneBackend.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using CapstoneBackend.Data;
-using CapstoneBackend.Models;
 
-namespace CapstoneBackend.Controllers
-{
+namespace CapstoneBackend.Controllers {
     [Route("api/[controller]")]
     [ApiController]
     public class RequestsController : ControllerBase {
@@ -92,31 +90,26 @@ namespace CapstoneBackend.Controllers
         }
         #endregion
         #region selfAddedMethods
-        private readonly CapstoneDbContext context = new CapstoneDbContext();
         public const string StatusNew = "NEW";
         public const string StatusEdit = "EDIT";
         public const string StatusReview = "REVIEW";
         public const string StatusApproved = "APPROVED";
         public const string StatusRejected = "REJECTED";
-        //[HttpGet("{userid}")]
         public IEnumerable<Request> GetRequestsToReviewNotOwn(int userId) {
-            return context.Request.Where(x => x.UserId != userId && x.Status == StatusReview).ToList();
+            return _context.Request.Where(x => x.UserId != userId && x.Status == StatusReview).ToList();
         }
-        //[HttpPut("{id}/{status}")]
         public bool SetToReview(Request request) {
-            if (request.Total <= 50) {
+            if (request.Total <= 100) {
                 request.Status = StatusApproved;
             } else {
                 request.Status = StatusReview;
             }
             return UpdateRequest(request.Id, request);
         }
-        //[HttpPut("{id}/{status}")]
         public bool SetToAppoved(Request request) {
             request.Status = StatusApproved;
             return UpdateRequest(request.Id, request);
         }
-        //[HttpPut("{id}/{status}")]
         public bool SetToRejected(Request request) {
             request.Status = StatusRejected;
             return UpdateRequest(request.Id, request);
@@ -129,5 +122,6 @@ namespace CapstoneBackend.Controllers
             return true;
         }
         #endregion
+
     }
 }

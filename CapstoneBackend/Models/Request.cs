@@ -14,7 +14,6 @@ namespace CapstoneBackend.Models {
         public string Status { get; set; }
         public double Total { get; set; }
         public int UserId { get; set; }
-        [JsonIgnore]
         public virtual User User { get; set; }
         [JsonIgnore]
         public virtual List<RequestLine> RequestLines { get; set; }

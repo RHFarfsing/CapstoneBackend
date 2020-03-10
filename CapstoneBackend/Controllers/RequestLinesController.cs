@@ -106,5 +106,14 @@ namespace CapstoneBackend.Controllers
         {
             return _context.RequestLine.Any(e => e.Id == id);
         }
+        private void GetTotal( int requestid) {
+            var request = _context.Request.Find(requestid);
+                request.Total = _context.RequestLine
+                .Include(l => l.Product)
+                .Where(l => l.RequestId == requestid)
+                .Sum(l => l.Quantity * l.Product.Price);
+                  _context.SaveChanges();
+        }
+
     }
 }
