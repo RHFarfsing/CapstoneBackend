@@ -58,6 +58,7 @@ namespace CapstoneBackend.Controllers
             try
             {
                 await _context.SaveChangesAsync();
+               // GetTotal(requestid: requestLine);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -82,7 +83,7 @@ namespace CapstoneBackend.Controllers
         {
             _context.RequestLine.Add(requestLine);
             await _context.SaveChangesAsync();
-
+            //GetTotal(requestid: requestLine);
             return CreatedAtAction("GetRequestLine", new { id = requestLine.Id }, requestLine);
         }
 
@@ -98,6 +99,7 @@ namespace CapstoneBackend.Controllers
 
             _context.RequestLine.Remove(requestLine);
             await _context.SaveChangesAsync();
+            //GetTotal(requestid:);
 
             return requestLine;
         }
@@ -106,6 +108,7 @@ namespace CapstoneBackend.Controllers
         {
             return _context.RequestLine.Any(e => e.Id == id);
         }
+
         private void GetTotal( int requestid) {
             var request = _context.Request.Find(requestid);
                 request.Total = _context.RequestLine

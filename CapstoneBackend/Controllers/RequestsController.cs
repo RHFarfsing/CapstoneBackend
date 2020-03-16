@@ -81,7 +81,8 @@ namespace CapstoneBackend.Controllers {
 
             _context.Request.Remove(request);
             await _context.SaveChangesAsync();
-
+            
+            
             return request;
         }
 
@@ -95,21 +96,25 @@ namespace CapstoneBackend.Controllers {
         public const string StatusReview = "REVIEW";
         public const string StatusApproved = "APPROVED";
         public const string StatusRejected = "REJECTED";
+        [HttpGet("{reviews}/{id}")]
         public IEnumerable<Request> GetRequestsToReviewNotOwn(int userId) {
             return _context.Request.Where(x => x.UserId != userId && x.Status == StatusReview).ToList();
         }
+        [HttpPost("{review}")]
         public bool SetToReview(Request request) {
-            if (request.Total <= 100) {
+            if (request.Total <= 50) {
                 request.Status = StatusApproved;
             } else {
                 request.Status = StatusReview;
             }
             return UpdateRequest(request.Id, request);
         }
+        [HttpPost("{approved}")]
         public bool SetToAppoved(Request request) {
             request.Status = StatusApproved;
             return UpdateRequest(request.Id, request);
         }
+       [HttpPost("{Rejected}")]
         public bool SetToRejected(Request request) {
             request.Status = StatusRejected;
             return UpdateRequest(request.Id, request);

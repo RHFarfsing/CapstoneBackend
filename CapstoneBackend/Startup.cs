@@ -33,7 +33,7 @@ namespace CapstoneBackend {
             });
             services.AddCors(options =>
             options.AddPolicy(DefaultCorsPolicy, x =>
-            x.WithOrigins(AllowOrigins).WithMethods(AllowMethods).AllowAnyHeader()
+            x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
             )
             );
 
