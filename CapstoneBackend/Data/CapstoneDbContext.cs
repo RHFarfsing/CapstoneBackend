@@ -54,7 +54,7 @@ namespace CapstoneBackend.Data {
                 e.Property(x => x.Name).HasMaxLength(30).IsRequired();
                 e.Property(x => x.Price).HasColumnType("decimal(11,2)");
                 e.Property(x => x.Unit).HasMaxLength(30).IsRequired();
-                e.Property(x => x.PhotoPath).HasMaxLength(225);
+                //e.Property(x => x.PhotoPath).HasMaxLength(225);
                 e.HasOne(x => x.Vendor).WithMany(x => x.Products).HasForeignKey(x => x.VendorId).OnDelete(DeleteBehavior.Restrict);
             });
             model.Entity<Request>(e => {
