@@ -20,11 +20,14 @@ namespace CapstoneBackend.Controllers
         }
         private readonly CapstoneDbContext context = new CapstoneDbContext();
 
-        [HttpGet("{login}/{username}/{password}")]
-        public User Login(string username, string password) {
-            if (true) {
-                return _context.User.SingleOrDefault(u => u.Username == username && u.Password == password);
+        [HttpGet("{username}/{password}")]
+        public async Task<ActionResult<User>> Login(string username, string password) {
+            
+                var user = await _context.User.SingleOrDefaultAsync(u => u.Username == username && u.Password == password);
+            if (user == null) {
+                return NotFound();
             }
+            return user;
         }
 
 
