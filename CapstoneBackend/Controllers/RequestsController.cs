@@ -100,7 +100,7 @@ namespace CapstoneBackend.Controllers {
         public IEnumerable<Request> GetRequestsToReviewNotOwn(int userId) {
             return _context.Request.Where(x => x.UserId != userId && x.Status == StatusReview).ToList();
         }
-        [HttpPost("{review}")]
+        [HttpPut("review")]
         public bool SetToReview(Request request) {
             if (request.Total <= 50) {
                 request.Status = StatusApproved;
@@ -109,12 +109,12 @@ namespace CapstoneBackend.Controllers {
             }
             return UpdateRequest(request.Id, request);
         }
-        [HttpPost("{approved}")]
+        [HttpPost("approved")]
         public bool SetToAppoved(Request request) {
             request.Status = StatusApproved;
             return UpdateRequest(request.Id, request);
         }
-       [HttpPost("{Rejected}")]
+       [HttpPost("rejected")]
         public bool SetToRejected(Request request) {
             request.Status = StatusRejected;
             return UpdateRequest(request.Id, request);
@@ -122,8 +122,10 @@ namespace CapstoneBackend.Controllers {
         public bool UpdateRequest(int id, Request request) {
             if (request == null) throw new Exception("Request cannot be null in an update");
             if (id != request.Id) throw new Exception("Id and Request.Id must match");
+            _context.Entry(request).State = EntityState.Modified;
+
             var rowsAffected = _context.SaveChanges();
-            if (rowsAffected == 0) throw new Exception("Update failed.");
+            //if (rowsAffected == 0) throw new Exception("Update failed.");
             return true;
         }
         #endregion
